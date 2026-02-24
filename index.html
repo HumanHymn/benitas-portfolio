@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#f4f2ee] text-[#1a1d1a]">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Benita — Business Development, Operations Management, and Strategic Planning.">
+    <title>Benita | Strategic Operations & Growth</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- GSAP for smooth, high-end animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Avenir"', '"Avenir Next"', '"Avenir LT Std"', 'Helvetica', 'Arial', 'sans-serif'],
+                        serif: ['"Avenir"', '"Avenir Next"', '"Avenir LT Std"', 'Helvetica', 'Arial', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1a1d1a',
+                            green: '#213c2b',
+                            sage: '#7fa18c',
+                            gold: '#c2a65d',
+                            beige: '#f4f2ee',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Hide scrollbar for clean aesthetic */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #7fa18c;
+            border-radius: 10px;
+        }
+
+        .image-circle {
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            background-color: transparent;
+            /* Ready for transparent images */
+        }
+
+        .img-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Marquee animation */
+        .marquee-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .hover-underline {
+            position: relative;
+        }
+
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .hover-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .modal-open {
+            overflow: hidden;
+        }
+
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+
+<body class="selection:bg-brand-gold selection:text-white">
+
+    <!-- Navbar -->
+    <nav
+        class="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center mix-blend-difference text-[#f4f2ee]">
+        <div class="font-black tracking-tighter text-2xl uppercase"></div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-8 text-xs font-bold tracking-[0.2em] uppercase">
+            <a href="#expertise" class="hover-underline">Expertise</a>
+            <a href="#skills" class="hover-underline">Skills</a>
+            <a href="#partners" class="hover-underline">Partners</a>
+        </div>
+
+        <a href="#contact"
+            class="hidden md:block text-xs font-bold tracking-[0.2em] uppercase border border-[#f4f2ee] px-6 py-3 rounded-full hover:bg-[#f4f2ee] hover:text-[#1a1d1a] transition-colors duration-300">
+            Get in touch
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="menu-btn" class="md:hidden text-[#f4f2ee] z-50 relative">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-brand-dark text-brand-beige z-40 flex flex-col justify-center items-center gap-10 opacity-0 pointer-events-none transition-opacity duration-500">
+        <a href="#expertise"
+            class="mobile-link text-4xl font-serif italic hover:text-brand-gold transition-colors">Expertise</a>
+        <a href="#skills" class="mobile-link text-4xl font-serif italic hover:text-brand-gold transition-colors">Skills
+            Matrix</a>
+        <a href="#partners"
+            class="mobile-link text-4xl font-serif italic hover:text-brand-gold transition-colors">Partners</a>
+        <a href="#contact"
+            class="mobile-link text-xl font-sans tracking-widest uppercase border-b border-brand-gold pb-1 mt-8">Connect</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home"
+        class="min-h-screen pt-32 pb-20 px-6 md:px-12 flex flex-col justify-center relative overflow-hidden bg-[#f4f2ee]">
+        <!-- Absolute Background Lines Image (Moved left, flipped horizontally vertically) -->
+        <img src="lines.png" alt=""
+            class="absolute bottom-0 left-0 w-full max-w-[80vw] lg:max-w-[70vw] object-cover object-left-bottom opacity-20 pointer-events-none z-0 transform -scale-y-100 -scale-x-100">
+
+        <div
+            class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+
+            <!-- Circular Image Area (Moved to left side) -->
+            <div class="order-1 flex justify-center lg:justify-start relative stagger-item z-10 pl-0 md:pl-10">
+                <!-- Golden ring wrapper -->
+                <div class="p-2 rounded-full border-4 border-[#c2a65d] shadow-lg relative bg-[#f4f2ee]">
+                    <!-- Inner mask -->
+                    <div
+                        class="w-[70vw] h-[70vw] max-w-[450px] max-h-[450px] image-circle flex items-center justify-center overflow-hidden">
+                        <!-- Rotate image slightly to correct the head tilt -->
+                        <img src="b.png" alt="Benita"
+                            class="w-full h-full object-cover rounded-full transform rotate-[10deg] scale-110 object-top"
+                            onerror="this.src=''; this.parentElement.innerHTML='Image Here'">
+                    </div>
+                </div>
+                <!-- Decorative Element (kept subtle shadow/glow if needed, but removed big blob) -->
+                <div
+                    class="absolute -bottom-10 right-10 w-32 h-32 bg-brand-gold rounded-full mix-blend-multiply opacity-10 blur-2xl">
+                </div>
+            </div>
+
+            <!-- Intro Text (Moved to right side, order-2) -->
+            <div class="order-2 space-y-8 stagger-item">
+                <!-- Text Panel mimicking the screenshot design -->
+                <div class="inline-flex items-center gap-4 pl-8 mb-12 md:mb-16">
+                    <span class="w-8 h-[2px] bg-[#c2a65d]/50"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#7fa18c]">Strategic
+                        Operations</span>
+                </div>
+
+                <div class="relative w-full max-w-[550px]">
+                    <h1
+                        class="text-7xl md:text-8xl lg:text-[110px] font-black font-serif tracking-tight leading-[0.8] text-[#1a1d1a] absolute -top-10 md:-top-16 left-8 z-10 drop-shadow-sm">
+                        Benita
+                    </h1>
+
+                    <div
+                        class="bg-gradient-to-tl from-[#e8e6e0]/60 to-[#fdfcfb]/40 backdrop-blur-xl rounded-[20px] rounded-br-[60px] p-8 md:p-12 pt-16 md:pt-24 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.05)] border border-white/40">
+                        <p class="text-base md:text-lg font-light text-[#1a1d1a]/70 leading-relaxed">
+                            Over a decade of experience helping businesses flourish. Bridging the gap between strategic
+                            vision
+                            and operational reality.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-8">
+                    <button id="scroll-down"
+                        class="w-16 h-16 rounded-full border border-brand-dark/20 flex flex-col items-center justify-center hover:bg-brand-dark hover:text-white transition-all duration-300 group">
+                        <i data-lucide="arrow-down" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Marquee Partners -->
+    <section id="partners" class="py-12 border-y border-brand-dark/10 overflow-hidden bg-brand-beige">
+        <div
+            class="marquee-wrapper text-3xl md:text-5xl font-black font-serif uppercase text-brand-dark/10 tracking-tighter">
+            <div class="marquee-content gap-16 px-8 items-center">
+                <span>American Express</span> <span class="text-brand-gold">•</span>
+                <span>Huawei</span> <span class="text-brand-gold">•</span>
+                <span>Microsoft</span> <span class="text-brand-gold">•</span>
+                <span>GoPro</span> <span class="text-brand-gold">•</span>
+                <span>Xbox</span> <span class="text-brand-gold">•</span>
+                <span>El Camino Health</span> <span class="text-brand-gold">•</span>
+                <!-- Duplicate for seamless loop -->
+                <span>American Express</span> <span class="text-brand-gold">•</span>
+                <span>Huawei</span> <span class="text-brand-gold">•</span>
+                <span>Microsoft</span> <span class="text-brand-gold">•</span>
+                <span>GoPro</span> <span class="text-brand-gold">•</span>
+                <span>Xbox</span> <span class="text-brand-gold">•</span>
+                <span>El Camino Health</span> <span class="text-brand-gold">•</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section (List Design instead of Bento) -->
+    <section id="expertise" class="py-32 px-6 md:px-12 bg-white text-brand-dark">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 flex flex-col md:flex-row justify-between items-end gap-8 reveal-section">
+                <div>
+                    <h2 class="text-5xl md:text-7xl font-sans font-black tracking-tighter">Areas of<br><span
+                            class="font-serif italic text-brand-sage font-light">Expertise</span></h2>
+                </div>
+                <p class="max-w-md text-brand-dark/60 font-light text-lg">Curated strategies to drive exponential growth
+                    and operational excellence.</p>
+            </div>
+
+            <div class="space-y-0 border-t border-brand-dark/10" id="expertise-list">
+                <!-- Dynamically generated list items -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Split Layout -->
+    <section id="skills" class="py-32 px-6 md:px-12 bg-brand-dark text-white relative">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
+
+            <div class="reveal-inner">
+                <h2 class="text-5xl md:text-6xl font-serif font-light italic mb-12">Capabilities</h2>
+                <div class="space-y-8">
+                    <div class="skill-item">
+                        <div class="flex justify-between text-sm uppercase tracking-widest font-bold mb-3">
+                            <span>Strategic Planning</span>
+                            <span class="text-brand-gold skill-percent" data-target="97">0%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-[4px] rounded-full overflow-hidden">
+                            <div class="bg-brand-gold h-[4px] rounded-full w-0 skill-bar" data-width="97"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="flex justify-between text-sm uppercase tracking-widest font-bold mb-3">
+                            <span>Business Development</span>
+                            <span class="text-brand-sage skill-percent" data-target="94">0%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-[4px] rounded-full overflow-hidden">
+                            <div class="bg-brand-sage h-[4px] rounded-full w-0 skill-bar" data-width="94"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="flex justify-between text-sm uppercase tracking-widest font-bold mb-3">
+                            <span>Operations Management</span>
+                            <span class="text-brand-gold skill-percent" data-target="92">0%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-[4px] rounded-full overflow-hidden">
+                            <div class="bg-brand-gold h-[4px] rounded-full w-0 skill-bar" data-width="92"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="flex justify-between text-sm uppercase tracking-widest font-bold mb-3">
+                            <span>Team Leadership</span>
+                            <span class="text-brand-sage skill-percent" data-target="95">0%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-[4px] rounded-full overflow-hidden">
+                            <div class="bg-brand-sage h-[4px] rounded-full w-0 skill-bar" data-width="95"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal-inner grid grid-cols-2 gap-x-8 gap-y-12">
+                <div>
+                    <h3
+                        class="text-xs uppercase tracking-[0.2em] font-bold text-brand-sage mb-6 border-b border-white/20 pb-4">
+                        Professional</h3>
+                    <ul class="space-y-4 font-serif text-lg text-white/80">
+                        <li>Agile Thinker</li>
+                        <li>Clear Conveyer</li>
+                        <li>Structured Strategist</li>
+                        <li>Negotiator</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3
+                        class="text-xs uppercase tracking-[0.2em] font-bold text-brand-gold mb-6 border-b border-white/20 pb-4">
+                        Technical</h3>
+                    <ul class="space-y-4 font-serif text-lg text-white/80">
+                        <li>AI Workflows</li>
+                        <li>Data Analysis</li>
+                        <li>Project Roadmapping</li>
+                        <li>GSuite & MS Office</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Connection Showcase -->
+    <section
+        class="py-32 px-6 md:px-12 bg-white flex flex-col items-center justify-center text-center border-t border-brand-dark/10">
+        <div class="reveal-section max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="w-64 h-64 md:w-80 md:h-80 shrink-0">
+                <div
+                    class="w-full h-full rounded-full overflow-hidden shadow-2xl border border-brand-dark/10 relative group">
+                    <img src="billy.jpg" alt="Connection"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div
+                        class="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] rounded-full pointer-events-none">
+                    </div>
+                </div>
+            </div>
+            <div class="text-left space-y-8">
+                <div
+                    class="inline-flex items-center gap-3 bg-brand-dark text-brand-gold px-5 py-2.5 rounded-full shadow-lg">
+                    <div class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.3em]">Connected</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-serif italic text-brand-dark">A Strategic Connection</h2>
+                <p class="text-brand-dark/70 font-light text-lg leading-relaxed max-w-xl">
+                    Forging powerful bonds across the industry. When true expertise aligns, the potential for tremendous
+                    exponential growth is unleashed. Moving forward, growing together.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <section id="contact"
+        class="pt-32 pb-12 px-6 md:px-12 bg-brand-green text-center text-brand-beige flex flex-col items-center">
+        <h2 class="text-6xl md:text-9xl font-black font-sans tracking-tighter mb-8 reveal-section">Let's Talk.</h2>
+        <p class="text-xl font-serif italic text-white/60 mb-16 max-w-lg mx-auto reveal-section">Ready to restructure,
+            optimize, and grow? Drop me an email or connect on LinkedIn.</p>
+
+        <div class="flex flex-col md:flex-row gap-8 mb-32 reveal-section">
+            <a href="mailto:bmclaurin@gmail.com"
+                class="px-10 py-5 bg-brand-gold text-brand-dark rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white transition-colors duration-300">
+                bmclaurin@gmail.com
+            </a>
+            <a href="https://linkedin.com/in/benitachantelle" target="_blank"
+                class="px-10 py-5 bg-transparent border border-white/20 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-colors duration-300">
+                LinkedIn Profile
+            </a>
+        </div>
+
+        <div
+            class="w-full max-w-7xl border-t border-white/10 pt-8 flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-white/40">
+            <span>&copy; <span id="year"></span> Benita.</span>
+            <button onclick="window.scrollTo(0,0)" class="hover:text-brand-gold transition-colors">Back to Top</button>
+        </div>
+    </section>
+
+    <!-- Modal for Expertise Image Display -->
+    <div id="image-modal"
+        class="fixed inset-0 z-[100] bg-brand-dark/90 backdrop-blur-md hidden items-center justify-center p-6 md:p-12 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+
+        <!-- Modal Card -->
+        <div id="modal-content"
+            class="w-full max-w-6xl aspect-auto md:aspect-[21/9] bg-brand-green rounded-[32px] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.5)] flex flex-col md:flex-row relative transform scale-95 translate-y-12 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] border border-brand-sage/20">
+            <!-- Close Button Inside Card -->
+            <button id="close-modal"
+                class="absolute top-6 right-6 md:top-8 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-brand-gold text-white flex items-center justify-center transition-all duration-300 z-20 backdrop-blur-sm border border-white/10 hover:scale-110 hover:rotate-90">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Image Side -->
+            <div class="w-full md:w-1/2 relative h-64 md:h-auto overflow-hidden group">
+                <img id="modal-img" src=""
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                <!-- Overlay Gradients to smooth harsh edges -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-transparent to-brand-green md:block hidden opacity-80">
+                </div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-brand-green to-transparent md:hidden block opacity-80">
+                </div>
+            </div>
+
+            <!-- Content Side -->
+            <div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center relative bg-brand-green">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-2 h-2 rounded-full bg-brand-gold"></div>
+                    <span class="text-brand-sage font-bold tracking-[0.2em] uppercase text-[10px]">Service
+                        Summary</span>
+                </div>
+
+                <h3 id="modal-title"
+                    class="text-4xl md:text-5xl lg:text-6xl font-black font-serif tracking-tighter text-white mb-6 pr-12">
+                </h3>
+
+                <p id="modal-desc" class="font-light text-white/60 text-lg md:text-xl leading-relaxed max-w-lg mb-8">
+                </p>
+
+                <!-- Optional: Yellow bezel line for structure -->
+                <div class="w-16 h-[2px] bg-brand-gold/60 mt-auto"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Init Icons & Year
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Data
+        const expertise = [
+            { id: 'ops', title: "Operations Management", desc: "Streamlining business processes to maximize efficiency and reduce overhead costs.", img: "ops.jpg" },
+            { id: 'launch', title: "Product Launches", desc: "End-to-end execution of GTM strategies for tech and healthcare sectors.", img: "launch.jpg" },
+            { id: 'bizdev', title: "Business Development", desc: "Identifying high-value partnerships and revenue streams.", img: "bizdev.jpg" },
+            { id: 'events', title: "Event Planning", desc: "Designing and managing corporate events that enhance brand presence.", img: "events.jpg" },
+            { id: 'ecom', title: "Ecommerce UX", desc: "Optimizing storefronts for conversion through data-driven approaches.", img: "ecom.jpg" }
+        ];
+
+        // Render List
+        const listEl = document.getElementById('expertise-list');
+        expertise.forEach((item, idx) => {
+            const num = String(idx + 1).padStart(2, '0');
+            const html = `
+                <div class="group border border-brand-dark/10 bg-[#f4f2ee] hover:shadow-xl hover:-translate-y-2 py-10 flex flex-col md:flex-row items-baseline gap-6 md:gap-12 cursor-pointer transition-all duration-500 px-8 rounded-xl reveal-item overflow-hidden relative" onclick="openModal('${item.id}')">
+                    <span class="text-xs font-bold text-brand-green tracking-widest relative z-10 w-20 transition-colors duration-500">NO. ${num}</span>
+                    <h3 class="text-4xl md:text-5xl font-serif text-brand-dark transition-colors duration-500 flex-1 relative z-10">${item.title}</h3>
+                    
+                    <div class="relative z-10 hidden md:flex items-center">
+                         <div class="w-12 h-12 rounded-full border border-brand-dark/20 bg-transparent group-hover:border-brand-green transition-all duration-500 flex items-center justify-center group-hover:scale-110">
+                            <i data-lucide="arrow-right" class="w-5 h-5 text-brand-dark opacity-0 group-hover:opacity-100 transition-opacity duration-500"></i>
+                         </div>
+                    </div>
+                </div>
+            `;
+            listEl.innerHTML += html;
+        });
+        lucide.createIcons();
+
+        // Modal Logic
+        const modal = document.getElementById('image-modal');
+        const modalContent = document.getElementById('modal-content');
+        const mImg = document.getElementById('modal-img');
+        const mTitle = document.getElementById('modal-title');
+        const mDesc = document.getElementById('modal-desc');
+
+        window.openModal = (id) => {
+            const item = expertise.find(e => e.id === id);
+            mImg.src = item.img;
+            mTitle.textContent = item.title;
+            mDesc.textContent = item.desc;
+
+            // Remove hidden lock
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('modal-open');
+
+            // Trigger animation frame for CSS transitions
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95', 'translate-y-12', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'translate-y-0', 'opacity-100');
+                });
+            });
+        };
+
+        const closeModalFunc = () => {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100', 'translate-y-0', 'opacity-100');
+            modalContent.classList.add('scale-95', 'translate-y-12', 'opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('modal-open');
+            }, 700); // match duration-700
+        };
+
+        document.getElementById('close-modal').onclick = closeModalFunc;
+
+        // Close when clicking outside content box
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+
+        // Close on Esc key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModalFunc();
+            }
+        });
+
+        // Scroll Down button
+        document.getElementById('scroll-down').onclick = () => {
+            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+        };
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let menuOpen = false;
+
+        menuBtn.onclick = () => {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileMenu.classList.remove('pointer-events-none', 'opacity-0');
+                menuBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+                document.body.classList.add('modal-open');
+            } else {
+                mobileMenu.classList.add('pointer-events-none', 'opacity-0');
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                document.body.classList.remove('modal-open');
+            }
+            lucide.createIcons();
+        };
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.onclick = () => {
+                menuBtn.click();
+            }
+        });
+
+        // Animations Setup (GSAP)
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Initial load stagger
+        gsap.to('.stagger-item', {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        // Scroll reveal sections
+        gsap.utils.toArray('.reveal-section').forEach(section => {
+            gsap.fromTo(section,
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1,
+                    duration: 1, ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%"
+                    }
+                }
+            );
+        });
+
+        // Setup list item sliding animation
+        gsap.utils.toArray('.reveal-item').forEach((item, index) => {
+            gsap.fromTo(item,
+                { y: 60, opacity: 0 },
+                {
+                    y: 0, opacity: 1,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    delay: index * 0.1, // Stagger effect
+                    scrollTrigger: {
+                        trigger: '#expertise-list',
+                        start: "top 80%"
+                    }
+                }
+            );
+        });
+
+        // Inner items stagger
+        gsap.utils.toArray('.reveal-inner > *').forEach((item, i) => {
+            gsap.fromTo(item,
+                { y: 30, opacity: 0 },
+                {
+                    y: 0, opacity: 1,
+                    duration: 0.8, ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 85%"
+                    }
+                }
+            );
+        });
+
+        // Skill Bars Animation
+        gsap.utils.toArray('.skill-item').forEach((item, index) => {
+            const bar = item.querySelector('.skill-bar');
+            const targetWidth = bar.getAttribute('data-width');
+            const percentText = item.querySelector('.skill-percent');
+            const targetPercent = parseInt(percentText.getAttribute('data-target'));
+
+            ScrollTrigger.create({
+                trigger: item,
+                start: "top 85%",
+                onEnter: () => {
+                    // Animate the bar width
+                    gsap.to(bar, {
+                        width: targetWidth + '%',
+                        duration: 1.5,
+                        ease: "power3.out",
+                        delay: index * 0.15
+                    });
+
+                    // Animate the number counter
+                    let counter = { val: 0 };
+                    gsap.to(counter, {
+                        val: targetPercent,
+                        duration: 1.5,
+                        ease: "power3.out",
+                        delay: index * 0.15,
+                        onUpdate: () => {
+                            percentText.textContent = Math.round(counter.val) + '%';
+                        }
+                    });
+                },
+                once: true // Only animate once
+            });
+        });
+    </script>
+</body>
+
+</html>
